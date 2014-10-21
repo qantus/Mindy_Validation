@@ -83,13 +83,18 @@ class ValidatorsTest extends TestCase
         $this->assertFalse($v->validate('qwe@foo.qwe'));
         $this->assertEquals(['Is not a valid email address'], $v->getErrors());
         $v->clearErrors();
+    }
 
+    /**
+     * @expectedException \Mindy\Exception\InvalidConfigException
+     */
+    public function testEmailValidatorException()
+    {
+        $v = new EmailValidator();
         $v->checkDNS = false;
         $v->enableIDN = true;
-        $this->setExpectedException('\Mindy\Exception\InvalidConfigException');
         $this->assertFalse($v->validate('qwe@foo.1'));
         $this->assertEquals(['Is not a valid email address'], $v->getErrors());
-        $v->clearErrors();
     }
 
     public function testUrlValidator()
@@ -116,11 +121,16 @@ class ValidatorsTest extends TestCase
         $v->pattern = '/^(([A-Z0-9][A-Z0-9_-]*)(\.[A-Z0-9][A-Z0-9_-]*)+)/i';
         $this->assertTrue($v->validate('studio107.ru'));
         $v->clearErrors();
+    }
 
+    /**
+     * @expectedException \Mindy\Exception\InvalidConfigException
+     */
+    public function testUrlValidatorException()
+    {
+        $v = new UrlValidator();
         $v->enableIDN = true;
-        $this->setExpectedException('\Mindy\Exception\InvalidConfigException');
         $this->assertTrue($v->validate('studio107.ru'));
-        $v->clearErrors();
     }
 
     public function testDateValidator()
