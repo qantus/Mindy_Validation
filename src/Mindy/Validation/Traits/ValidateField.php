@@ -24,7 +24,7 @@ trait ValidateField
      */
     public $validators = [];
     /**
-     * @var array
+     * @var array of errors
      */
     private $_errors = [];
 

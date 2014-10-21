@@ -26,7 +26,7 @@ trait ValidateObject
      */
     public $cleanedData = [];
     /**
-     * @var array
+     * @var array validation errors (attribute name => array of errors)
      */
     private $_errors = [];
     /**
