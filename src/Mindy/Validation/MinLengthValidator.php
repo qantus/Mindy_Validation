@@ -1,9 +1,9 @@
 <?php
 /**
- * 
+ *
  *
  * All rights reserved.
- * 
+ *
  * @author Falaleev Maxim
  * @email max@studio107.ru
  * @version 1.0
@@ -27,12 +27,10 @@ class MinLengthValidator extends Validator
 
     public function validate($value)
     {
-        if(!is_string($value)) {
-            $this->addError(Translate::getInstance()->t("{type} is not a string", ['{type}' => gettype($value)], 'validation'));
-        }
-
-        if (mb_strlen($value, 'UTF-8') < $this->minLength) {
-            $this->addError(Translate::getInstance()->t("Minimal length is {length}", ['{length}' => $this->minLength], 'validation'));
+        if (is_object($value)) {
+            $this->addError(Translate::getInstance()->t('validation', "{type} is not a string", ['{type}' => gettype($value)]));
+        } else if (mb_strlen((string)$value, 'UTF-8') <= $this->minLength) {
+            $this->addError(Translate::getInstance()->t('validation', "Minimal length is {length}", ['{length}' => $this->minLength]));
         }
 
         return $this->hasErrors() === false;

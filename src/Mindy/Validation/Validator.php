@@ -16,10 +16,23 @@ namespace Mindy\Validation;
 
 abstract class Validator
 {
-    private $_errors;
-
+    /**
+     * @var string
+     */
     protected $name;
+    /**
+     * @var \Mindy\Orm\Model|string
+     */
+    protected $model;
+    /**
+     * @var array
+     */
+    private $_errors = [];
 
+    /**
+     * @param $value
+     * @return mixed
+     */
     abstract public function validate($value);
 
     protected function addError($error)
@@ -50,5 +63,15 @@ abstract class Validator
     public function getName()
     {
         return $this->name;
+    }
+
+    public function setModel($model)
+    {
+        $this->model = $model;
+    }
+
+    public function getModel()
+    {
+        return $this->model;
     }
 }

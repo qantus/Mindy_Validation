@@ -1,9 +1,9 @@
 <?php
 /**
- * 
+ *
  *
  * All rights reserved.
- * 
+ *
  * @author Falaleev Maxim
  * @email max@studio107.ru
  * @version 1.0
@@ -14,6 +14,7 @@
 
 namespace Mindy\Validation;
 
+use Mindy\Exception\InvalidConfigException;
 use Mindy\Locale\Translate;
 
 class EmailValidator extends Validator
@@ -51,16 +52,18 @@ class EmailValidator extends Validator
     public function validate($value)
     {
         // make sure string length is limited to avoid DOS attacks
-        if (empty($value)) {
-            $valid = true;
-        } elseif (!is_string($value) || strlen($value) >= 320) {
+        if (!is_string($value) || strlen($value) >= 320) {
             $valid = false;
         } elseif (!preg_match('/^(.*<?)(.*)@(.*)(>?)$/', $value, $matches)) {
             $valid = false;
         } else {
             $domain = $matches[3];
             if ($this->enableIDN) {
-                $value = $matches[1] . idn_to_ascii($matches[2]) . '@' . idn_to_ascii($domain) . $matches[4];
+                if (!function_exists('idn_to_ascii')) {
+                    throw new InvalidConfigException('In order to use IDN validation intl extension must be installed and enabled.');
+                } else {
+                    $value = $matches[1] . idn_to_ascii($matches[2]) . '@' . idn_to_ascii($domain) . $matches[4];
+                }
             }
             $valid = preg_match($this->pattern, $value) || $this->allowName && preg_match($this->fullPattern, $value);
             if ($valid && $this->checkDNS) {
@@ -68,8 +71,8 @@ class EmailValidator extends Validator
             }
         }
 
-        if(!$valid) {
-            $this->addError(Translate::getInstance()->t("Is not a valid email address", [], 'validation'));
+        if (!$valid) {
+            $this->addError(Translate::getInstance()->t('validation', "Is not a valid email address", []));
         }
 
         return $this->hasErrors() === false;
