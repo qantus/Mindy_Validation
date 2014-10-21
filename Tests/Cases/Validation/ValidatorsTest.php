@@ -86,7 +86,7 @@ class ValidatorsTest extends TestCase
 
         $v->checkDNS = false;
         $v->enableIDN = true;
-        $this->setExpectedException('Mindy\Exception\InvalidConfigException');
+        $this->setExpectedException('\Mindy\Exception\InvalidConfigException');
         $this->assertFalse($v->validate('qwe@foo.qwe'));
         $this->assertEquals(['Is not a valid email address'], $v->getErrors());
         $v->clearErrors();
@@ -118,7 +118,7 @@ class ValidatorsTest extends TestCase
         $v->clearErrors();
 
         $v->enableIDN = true;
-        $this->setExpectedException('Mindy\Exception\InvalidConfigException');
+        $this->setExpectedException('\Mindy\Exception\InvalidConfigException');
         $this->assertTrue($v->validate('studio107.ru'));
         $v->clearErrors();
     }
