@@ -34,6 +34,11 @@ trait ValidateObject
      */
     public function isValid()
     {
+        return $this->isValidInternal();
+    }
+
+    public function isValidInternal()
+    {
         $this->clearErrors();
 
         /* @var $field \Mindy\Orm\Fields\Field|\Mindy\Form\Fields\Field */
@@ -106,6 +111,15 @@ trait ValidateObject
      */
     public function clearErrors($attribute = null)
     {
+        $this->clearErrorsInternal($attribute);
+    }
+
+    /**
+     * Removes errors for all attributes or a single attribute.
+     * @param string $attribute attribute name. Use null to remove errors for all attribute.
+     */
+    public function clearErrorsInternal($attribute = null)
+    {
         /* @var $field \Mindy\Orm\Fields\Field|\Mindy\Form\Fields\Field */
         /* @var $this \Mindy\Validation\Interfaces\IValidateObject|\Mindy\Validation\Traits\ValidateObject */
         if ($attribute === null) {
@@ -132,5 +146,10 @@ trait ValidateObject
         if ($this->hasField($attribute)) {
             $this->_errors[$attribute][] = $error;
         }
+    }
+
+    public function addErrors($errors)
+    {
+        $this->_errors = array_merge($this->_errors, $errors);
     }
 }
