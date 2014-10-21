@@ -135,6 +135,8 @@ class ValidatorsTest extends TestCase
 
     public function testDateValidator()
     {
+        date_default_timezone_set('UTC');
+
         $v = new DateValidator('Y-m-d');
         $this->assertTrue($v->validate('2012-10-11'));
         $v->clearErrors();
