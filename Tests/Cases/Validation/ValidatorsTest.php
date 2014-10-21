@@ -87,7 +87,7 @@ class ValidatorsTest extends TestCase
         $v->checkDNS = false;
         $v->enableIDN = true;
         $this->setExpectedException('\Mindy\Exception\InvalidConfigException');
-        $this->assertFalse($v->validate('qwe@foo.qwe'));
+        $this->assertFalse($v->validate('qwe@foo.1'));
         $this->assertEquals(['Is not a valid email address'], $v->getErrors());
         $v->clearErrors();
     }
