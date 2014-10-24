@@ -20,12 +20,15 @@ class UniqueValidator extends Validator
     public function validate($value)
     {
         $modelClass = $this->getModel();
-        if ($modelClass->getIsNewRecord()) {
-            if ($modelClass::objects()->filter([$this->getName() => $value])->count() > 0) {
-                $this->addError(Translate::getInstance()->t('validation', "{name} must be a unique", [
-                    '{name}' => $this->name
-                ]));
-            }
+        $qs = $modelClass::objects()->filter([$this->getName() => $value]);
+        if (!$modelClass->getIsNewRecord()) {
+            $qs->exclude(['pk' => $model->pk]);
+        }
+
+        if ($qs->count() > 0) {
+            $this->addError(Translate::getInstance()->t('validation', "{name} must be a unique", [
+                '{name}' => $this->name
+            ]));
         }
 
         return $this->hasErrors() === false;

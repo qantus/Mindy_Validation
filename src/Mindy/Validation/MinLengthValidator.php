@@ -29,7 +29,7 @@ class MinLengthValidator extends Validator
     {
         if (is_object($value)) {
             $this->addError(Translate::getInstance()->t('validation', "{type} is not a string", ['{type}' => gettype($value)]));
-        } else if (mb_strlen((string)$value, 'UTF-8') <= $this->minLength) {
+        } else if (mb_strlen((string)$value, 'UTF-8') < $this->minLength) {
             $this->addError(Translate::getInstance()->t('validation', "Minimal length is {length}", ['{length}' => $this->minLength]));
         }
 
