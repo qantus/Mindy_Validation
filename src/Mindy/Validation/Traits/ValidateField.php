@@ -50,7 +50,7 @@ trait ValidateField
                     $this->addErrors($valid);
                 }
             } else if ($validator instanceof Validator) {
-                if($this instanceof \Mindy\Form\Fields\Field) {
+                if($this->form instanceof \Mindy\Form\ModelForm) {
                     $validator->setModel($this->form->getInstance());
                 }
                 $validator->clearErrors();
@@ -65,7 +65,7 @@ trait ValidateField
 
     public function getErrors()
     {
-        return $this->_errors;
+        return array_unique($this->_errors);
     }
 
     public function hasErrors()
