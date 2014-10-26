@@ -19,9 +19,9 @@ class UniqueValidator extends Validator
 {
     public function validate($value)
     {
-        $modelClass = $this->getModel();
-        $qs = $modelClass::objects()->filter([$this->getName() => $value]);
-        if (!$modelClass->getIsNewRecord()) {
+        $model = $this->getModel();
+        $qs = $model::objects()->filter([$this->getName() => $value]);
+        if (!$model->getIsNewRecord()) {
             $qs->exclude(['pk' => $model->pk]);
         }
 
