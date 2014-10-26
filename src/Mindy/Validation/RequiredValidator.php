@@ -21,7 +21,9 @@ class RequiredValidator extends Validator
     public function validate($value)
     {
         if (empty($value)) {
-            $this->addError(Translate::getInstance()->t('validation', "Value cannot be empty"));
+            $this->addError(Translate::getInstance()->t('validation', "{name} cannot be empty", [
+                '{name}' => $this->getName()
+            ]));
         }
 
         return $this->hasErrors() === false;
