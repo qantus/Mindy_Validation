@@ -143,8 +143,9 @@ trait ValidateObject
     public function addError($attribute, $error)
     {
         /* @var $this \Mindy\Validation\Interfaces\IValidateObject|\Mindy\Validation\Traits\ValidateObject */
+        $this->_errors[$attribute][] = $error;
         if ($this->hasField($attribute)) {
-            $this->_errors[$attribute][] = $error;
+            $this->getField($attribute)->addError($error);
         }
     }
 
