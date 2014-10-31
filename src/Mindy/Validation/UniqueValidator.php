@@ -17,6 +17,18 @@ use Mindy\Locale\Translate;
 
 class UniqueValidator extends Validator
 {
+    /**
+     * @var string
+     */
+    public $message = "{name} must be a unique";
+
+    public function __construct($message = null)
+    {
+        if ($message !== null) {
+            $this->message = $message;
+        }
+    }
+
     public function validate($value)
     {
         $model = $this->getModel();
@@ -26,7 +38,7 @@ class UniqueValidator extends Validator
         }
 
         if ($qs->count() > 0) {
-            $this->addError(Translate::getInstance()->t('validation', "{name} must be a unique", [
+            $this->addError(Translate::getInstance()->t('validation', $this->message, [
                 '{name}' => $this->name
             ]));
         }
