@@ -1,9 +1,9 @@
 <?php
 /**
- * 
+ *
  *
  * All rights reserved.
- * 
+ *
  * @author Falaleev Maxim
  * @email max@studio107.ru
  * @version 1.0
@@ -33,14 +33,20 @@ trait ValidateField
         $this->_errors = [];
     }
 
+    public function getValidators()
+    {
+        return $this->validators;
+    }
+
     public function isValid()
     {
         $this->clearErrors();
 
-        foreach ($this->validators as $validator) {
+        $validators = $this->getValidators();
+        foreach ($validators as $validator) {
             if ($validator instanceof Closure) {
                 /* @var $validator Closure */
-                /* @var $this \Mindy\Validation\Interfaces\IValidatorObject */
+                /* @var $this \Mindy\Validation\Interfaces\IValidateObject */
                 $valid = $validator->__invoke($this->getValue());
                 if ($valid !== true) {
                     if (!is_array($valid)) {
@@ -50,7 +56,7 @@ trait ValidateField
                     $this->addErrors($valid);
                 }
             } else if ($validator instanceof Validator) {
-                if($this instanceof \Mindy\Form\Fields\Field && $this->getForm() instanceof \Mindy\Form\ModelForm) {
+                if ($this instanceof \Mindy\Form\Fields\Field && $this->getForm() instanceof \Mindy\Form\ModelForm) {
                     $validator->setModel($this->form->getInstance());
                 }
                 $validator->clearErrors();
