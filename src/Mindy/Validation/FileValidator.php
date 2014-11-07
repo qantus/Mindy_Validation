@@ -15,11 +15,18 @@
 namespace Mindy\Validation;
 
 use Mindy\Locale\Translate;
+use Symfony\Component\Console\Helper\FormatterHelper;
 
 class FileValidator extends Validator
 {
-    public $allowedTypes = null;
-
+    /**
+     * @var null
+     */
+    public $allowedTypes = [];
+    /**
+     * @var null|int maximum file size or null for unlimited. Default value 2 mb.
+     */
+    public $maxSize = 2097152;
     /**
      * @var bool
      */
@@ -67,6 +74,12 @@ class FileValidator extends Validator
         if (is_array($value)) {
             if ($value['error'] != UPLOAD_ERR_OK && !($this->null === true && $value['error'] == UPLOAD_ERR_NO_FILE)) {
                 $this->addError(Translate::getInstance()->t('validation', $this->codeToMessage($value['error'])));
+            }
+
+            if ($this->maxSize !== null && $value['size'] > $this->maxSize) {
+                $this->addError(Translate::getInstance()->t('validation', 'Maximum uploaded file size: {size}', [
+                    '{size}' => FormatterHelper::formatMemory($this->maxSize)
+                ]));
             }
         }
 
