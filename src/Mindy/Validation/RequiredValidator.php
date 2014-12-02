@@ -19,7 +19,7 @@ use Mindy\Locale\Translate;
 class RequiredValidator extends Validator
 {
     public function validate($value)
-    {cd
+    {
         if (!$value) {
             $this->addError(Translate::getInstance()->t('validation', '"{name}" cannot be empty', [
                 '{name}' => $this->getName()
