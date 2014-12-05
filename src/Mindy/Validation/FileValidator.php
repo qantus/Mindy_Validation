@@ -71,8 +71,15 @@ class FileValidator extends Validator
 
     public function validate($value)
     {
+        $model = $this->getModel();
         if (is_array($value)) {
-            if ($value['error'] != UPLOAD_ERR_OK && !($this->null === false && $value['error'] == UPLOAD_ERR_NO_FILE)) {
+            $v = $model ? $model->{$this->name}->getValue() : null;
+            if (
+                empty($v) &&
+                $value['error'] != UPLOAD_ERR_OK &&
+                $this->null !== false &&
+                $value['error'] != UPLOAD_ERR_NO_FILE
+            ) {
                 $this->addError(Translate::getInstance()->t('validation', $this->codeToMessage($value['error'])));
             }
 
