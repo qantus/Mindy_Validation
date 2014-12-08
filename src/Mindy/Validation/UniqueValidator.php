@@ -20,7 +20,7 @@ class UniqueValidator extends Validator
     /**
      * @var string
      */
-    public $message = "{name} must be a unique";
+    public $message = "Must be a unique";
 
     public function __construct($message = null)
     {
