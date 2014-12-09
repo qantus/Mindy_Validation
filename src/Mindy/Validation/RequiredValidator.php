@@ -18,7 +18,17 @@ use Mindy\Locale\Translate;
 
 class RequiredValidator extends Validator
 {
+    /**
+     * @var string
+     */
     public $message = "Cannot be empty";
+
+    public function __construct($message = null)
+    {
+        if ($message !== null) {
+            $this->message = $message;
+        }
+    }
 
     public function validate($value)
     {

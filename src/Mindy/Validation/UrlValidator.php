@@ -47,6 +47,17 @@ class UrlValidator extends Validator
     public $enableIDN = false;
 
     /**
+     * @var string
+     */
+    public $message = 'Is not a valid URL';
+
+    public function __construct($message = null)
+    {
+        if ($message !== null) {
+            $this->message = $message;
+        }
+    }
+    /**
      * @inheritdoc
      */
     public function validate($value)
@@ -70,13 +81,13 @@ class UrlValidator extends Validator
             }
 
             if (!preg_match($pattern, $value)) {
-                $this->addError(Translate::getInstance()->t('validation', '{attribute} is not a valid URL.', [
-                    '{attribute}' => $this->name
+                $this->addError(Translate::getInstance()->t('validation', $this->message, [
+                    '{name}' => $this->name
                 ]));
             }
         } else {
-            $this->addError(Translate::getInstance()->t('validation', '{attribute} is not a valid URL.', [
-                '{attribute}' => $this->name
+            $this->addError(Translate::getInstance()->t('validation', $this->message, [
+                '{name}' => $this->name
             ]));
         }
 
