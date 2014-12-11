@@ -26,16 +26,17 @@ class FileValidator extends Validator
     /**
      * @var null|int maximum file size or null for unlimited. Default value 2 mb.
      */
-    public $maxSize = 2097152;
+    public $maxSize;
     /**
      * @var bool
      */
     public $null;
 
-    public function __construct($null, $allowedTypes = null)
+    public function __construct($null, $allowedTypes = null, $maxSize = 2097152)
     {
         $this->allowedTypes = $allowedTypes;
         $this->null = $null;
+        $this->maxSize = $maxSize;
     }
 
     protected function codeToMessage($code)
