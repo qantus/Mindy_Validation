@@ -51,11 +51,8 @@ class EmailValidator extends Validator
 
     public function validate($value)
     {
-        // RequiredValidator is checking for empty values
-        if (empty($value)) {
-            $valid = true;
         // make sure string length is limited to avoid DOS attacks
-        } elseif (!is_string($value) || strlen($value) >= 320) {
+        if (!is_string($value) || strlen($value) >= 320) {
             $valid = false;
         } elseif (!preg_match('/^(.*<?)(.*)@(.*)(>?)$/', $value, $matches)) {
             $valid = false;
