@@ -48,9 +48,21 @@ class EmailValidator extends Validator
      * otherwise an exception would be thrown.
      */
     public $enableIDN = false;
+    /**
+     * @var boolean
+     */
+    public $required = true;
+
+    public function __construct($required = true)
+    {
+        $this->required = $required;
+    }
 
     public function validate($value)
     {
+        if ($this->required && (is_null($value) || $value === '')) {
+            return true;
+        }
         // make sure string length is limited to avoid DOS attacks
         if (!is_string($value) || strlen($value) >= 320) {
             $valid = false;
