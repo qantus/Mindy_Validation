@@ -177,7 +177,7 @@ class ValidatorsTest extends TestCase
 
     public function testFileValidator()
     {
-        $v = new FileValidator(['txt']);
+        $v = new FileValidator(false, ['txt']);
 
         $this->assertTrue($v->validate(['name' => 'test.txt', 'error' => UPLOAD_ERR_OK, 'size' => 1]));
         $v->clearErrors();
