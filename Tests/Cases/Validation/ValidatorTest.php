@@ -130,7 +130,7 @@ class ValidatorTest extends TestCase
         $this->assertEquals(1, count($f->validators));
         $this->assertFalse($f->isValid());
         $this->assertTrue($f->hasErrors());
-        $this->assertEquals(['Value cannot be empty'], $f->getErrors());
+        $this->assertEquals(['Cannot be empty'], $f->getErrors());
         $f->clearErrors();
         $this->assertFalse($f->hasErrors());
         $this->assertEquals([], $f->getErrors());
@@ -171,8 +171,8 @@ class ValidatorTest extends TestCase
         $this->assertTrue($f->hasField('name'));
         $this->assertInstanceOf(Field::className(), $f->getField('name'));
         $this->assertFalse($f->isValid());
-        $this->assertEquals(['name' => ['Value cannot be empty']], $f->getErrors());
-        $this->assertEquals(['Value cannot be empty'], $f->getErrors('name'));
+        $this->assertEquals(['name' => ['Cannot be empty']], $f->getErrors());
+        $this->assertEquals(['Cannot be empty'], $f->getErrors('name'));
         $this->assertTrue($f->hasErrors());
         $f->clearErrors();
         $this->assertFalse($f->hasErrors());
@@ -195,8 +195,8 @@ class ValidatorTest extends TestCase
             ],
         ]);
         $this->assertFalse($f->isValid());
-        $this->assertEquals(['name' => ['Error', 'Value cannot be empty']], $f->getErrors());
-        $this->assertEquals(['Error', 'Value cannot be empty'], $f->getErrors('name'));
+        $this->assertEquals(['name' => ['Error', 'Cannot be empty']], $f->getErrors());
+        $this->assertEquals(['Error', 'Cannot be empty'], $f->getErrors('name'));
 
         $f->getField('name')->setValue(1);
         $this->assertTrue($f->isValid());
