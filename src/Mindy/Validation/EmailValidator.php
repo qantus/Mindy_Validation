@@ -60,7 +60,7 @@ class EmailValidator extends Validator
 
     public function validate($value)
     {
-        if ($this->required && (is_null($value) || $value === '')) {
+        if (!$this->required && (is_null($value) || $value === '')) {
             return true;
         }
         // make sure string length is limited to avoid DOS attacks
