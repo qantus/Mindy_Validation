@@ -179,10 +179,10 @@ class ValidatorsTest extends TestCase
     {
         $v = new FileValidator(['txt']);
 
-        $this->assertTrue($v->validate(['name' => 'test.txt']));
+        $this->assertTrue($v->validate(['name' => 'test.txt', 'error' => UPLOAD_ERR_OK]));
         $v->clearErrors();
 
-        $this->assertFalse($v->validate(['name' => 'test.mp3']));
+        $this->assertFalse($v->validate(['name' => 'test.mp3', 'error' => UPLOAD_ERR_OK]));
         $this->assertEquals(['Is not a valid file type mp3. Types allowed: txt'], $v->getErrors());
         $v->clearErrors();
     }
