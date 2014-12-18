@@ -32,7 +32,7 @@ class RequiredValidator extends Validator
 
     public function validate($value)
     {
-        if (!$value) {
+        if (is_null($value) || $value === "" || (is_array($value) && empty($value))) {
             $this->addError(Translate::getInstance()->t('validation', $this->message, [
                 '{name}' => $this->getName()
             ]));
