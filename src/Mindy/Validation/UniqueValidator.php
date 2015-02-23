@@ -1,20 +1,14 @@
 <?php
 
-/**
- * All rights reserved.
- *
- * @author Falaleev Maxim
- * @email max@studio107.ru
- * @version 1.0
- * @company Studio107
- * @site http://studio107.ru
- * @date 10/05/14.05.2014 15:50
- */
 
 namespace Mindy\Validation;
 
 use Mindy\Locale\Translate;
 
+/**
+ * Class UniqueValidator
+ * @package Mindy\Validation
+ */
 class UniqueValidator extends Validator
 {
     /**

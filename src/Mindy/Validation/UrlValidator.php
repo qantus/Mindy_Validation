@@ -1,18 +1,7 @@
 <?php
-/**
- * 
- *
- * All rights reserved.
- * 
- * @author Falaleev Maxim
- * @email max@studio107.ru
- * @version 1.0
- * @company Studio107
- * @site http://studio107.ru
- * @date 21/10/14.10.2014 14:18
- */
 
 namespace Mindy\Validation;
+
 use Mindy\Exception\InvalidConfigException;
 use Mindy\Locale\Translate;
 
@@ -24,6 +13,7 @@ use Mindy\Locale\Translate;
  *
  * @author Qiang Xue <qiang.xue@gmail.com>
  * @since 2.0
+ * @package Mindy\Validation
  */
 class UrlValidator extends Validator
 {

@@ -1,21 +1,15 @@
 <?php
 
-/**
- * All rights reserved.
- *
- * @author Falaleev Maxim
- * @email max@studio107.ru
- * @version 1.0
- * @company Studio107
- * @site http://studio107.ru
- * @date 17/12/14 14:57
- */
 
 namespace Mindy\Validation;
 
 use Mindy\Helper\Json;
 use Mindy\Locale\Translate;
 
+/**
+ * Class RecaptchaValidator
+ * @package Mindy\Validation
+ */
 class RecaptchaValidator extends Validator
 {
     /**
