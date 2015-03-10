@@ -32,8 +32,11 @@ trait ValidateField
 
     public function isValid()
     {
+        /** @var $this \Mindy\Form\Fields\Field|\Mindy\Orm\Fields\Field */
+
         $this->clearErrors();
 
+        $value = $this->getValue();
         $validators = $this->getValidators();
         foreach ($validators as $validator) {
             if ($validator instanceof Closure) {
@@ -52,7 +55,7 @@ trait ValidateField
                     $validator->setModel($this->form->getInstance());
                 }
                 $validator->clearErrors();
-                if ($validator->validate($this->getValue()) === false) {
+                if ($validator->validate($value) === false) {
                     $this->addErrors($validator->getErrors());
                 }
             }
