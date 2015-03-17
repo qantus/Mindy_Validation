@@ -2,8 +2,8 @@
 
 namespace Mindy\Validation;
 
+use Mindy\Helper\File;
 use Mindy\Locale\Translate;
-use Symfony\Component\Console\Helper\FormatterHelper;
 
 /**
  * Class FileValidator
@@ -64,6 +64,8 @@ class FileValidator extends Validator
 
     public function validate($value)
     {
+        /** @var \Mindy\Locale\Translate $t */
+        $t = Translate::getInstance();
         $model = $this->getModel();
         if (is_array($value)) {
             $v = $model ? $model->{$this->name}->getValue() : null;
@@ -73,12 +75,12 @@ class FileValidator extends Validator
                 $this->null !== false &&
                 $value['error'] != UPLOAD_ERR_NO_FILE
             ) {
-                $this->addError(Translate::getInstance()->t('validation', $this->codeToMessage($value['error'])));
+                $this->addError($t->t('validation', $this->codeToMessage($value['error'])));
             }
 
             if ($this->maxSize !== null && $value['size'] > $this->maxSize) {
-                $this->addError(Translate::getInstance()->t('validation', 'Maximum uploaded file size: {size}', [
-                    '{size}' => FormatterHelper::formatMemory($this->maxSize)
+                $this->addError($t->t('validation', 'Maximum uploaded file size: {size}', [
+                    '{size}' => File::bytesToSize($this->maxSize)
                 ]));
             }
         }
@@ -91,8 +93,13 @@ class FileValidator extends Validator
         }
 
         $ext = strtolower(pathinfo($filename, PATHINFO_EXTENSION));
-        if ($ext && is_array($this->allowedTypes) && !in_array($ext, $this->allowedTypes)) {
-            $this->addError(Translate::getInstance()->t('validation', "Is not a valid file type {type}. Types allowed: {allowed}", [
+        if (
+            $ext &&
+            is_array($this->allowedTypes) &&
+            !empty($this->allowedTypes) &&
+            !in_array($ext, $this->allowedTypes)
+        ) {
+            $this->addError($t->t('validation', "Is not a valid file type {type}. Types allowed: {allowed}", [
                 '{type}' => $ext,
                 '{allowed}' => implode(', ', $this->allowedTypes)
             ]));
