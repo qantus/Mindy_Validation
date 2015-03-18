@@ -32,10 +32,18 @@ trait ValidateObject
         /* @var $field \Mindy\Orm\Fields\Field|\Mindy\Form\Fields\Field */
         /* @var $this \Mindy\Validation\Interfaces\IValidateObject|\Mindy\Validation\Traits\ValidateObject */
         $fields = $this->getFieldsInit();
+
+        // Fill cleaned data from form
         foreach ($fields as $name => $field) {
-            if (method_exists($this, 'clean' . ucfirst($name))) {
-                $value = call_user_func([$this, 'clean' . ucfirst($name)], $field->getValue());
-                if ($value) {
+            $this->cleanedData[$name] = $field->getValue();
+        }
+
+        foreach ($fields as $name => $field) {
+            // If field is valid, trying to run clean<Fieldname> method in current form
+            if ($field->isValid()) {
+                if (method_exists($this, 'clean' . ucfirst($name))) {
+                    $value = call_user_func([$this, 'clean' . ucfirst($name)], $this->cleanedData[$name]);
+                    $this->cleanedData[$name] = $value;
                     $field->setValue($value);
                 }
             }
