@@ -46,11 +46,11 @@ trait ValidateObject
                     $this->cleanedData[$name] = $value;
                     $field->setValue($value);
                 }
-            }
 
-            if ($field->isValid() === false) {
-                foreach ($field->getErrors() as $error) {
-                    $this->addError($name, $error);
+                if ($this->hasErrors() !== false) {
+                    foreach ($field->getErrors() as $error) {
+                        $this->addError($name, $error);
+                    }
                 }
             }
 
