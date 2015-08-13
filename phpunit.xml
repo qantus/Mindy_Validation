@@ -8,16 +8,17 @@
          processIsolation="false"
          stopOnFailure="false"
          syntaxCheck="true"
-         bootstrap="./Tests/bootstrap.php">
+         bootstrap="Tests/bootstrap.php">
     <php>
         <ini name="memory_limit" value="-1"/>
         <ini name="display_errors" value="1"/>
         <ini name="error_reporting" value="-1"/>
+        <ini name="date.timezone" value="Europe/Moscow"/>
     </php>
 
     <testsuites>
         <testsuite>
-            <directory>./Tests/Cases/Validation/</directory>
+            <directory>Tests/Cases/Validation/</directory>
         </testsuite>
     </testsuites>
 

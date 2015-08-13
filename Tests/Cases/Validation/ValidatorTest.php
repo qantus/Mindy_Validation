@@ -195,8 +195,8 @@ class ValidatorTest extends TestCase
             ],
         ]);
         $this->assertFalse($f->isValid());
-        $this->assertEquals(['name' => ['Error', 'Cannot be empty']], $f->getErrors());
-        $this->assertEquals(['Error', 'Cannot be empty'], $f->getErrors('name'));
+        $this->assertEquals(['name' => ['Cannot be empty']], $f->getErrors());
+        $this->assertEquals(['Cannot be empty'], $f->getErrors('name'));
 
         $f->getField('name')->setValue(1);
         $this->assertTrue($f->isValid());
